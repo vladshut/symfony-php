@@ -12,6 +12,9 @@ RUN apk upgrade --update && apk --no-cache add \
     libpng-dev libressl-dev libxml2-dev postgresql-dev icu-dev \
     yarn php-zip
 
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+RUN export LD_PRELOAD=/usr/lib/preloadable_libiconv.so
+
 RUN apk add --no-cache --virtual build-dependencies icu-dev libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev g++ make autoconf
 
 RUN docker-php-ext-configure intl \
