@@ -8,7 +8,7 @@ RUN apk upgrade --update && apk --no-cache add \
     git autoconf tzdata openntpd libcurl curl-dev coreutils \
     libmcrypt-dev freetype-dev libxpm-dev libjpeg-turbo-dev libvpx-dev \
     libpng-dev libressl-dev libxml2-dev postgresql-dev icu-dev \
-    yarn libonig-dev
+    yarn
 
 RUN apk add --no-cache --virtual build-dependencies icu-dev libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev g++ make autoconf
 
@@ -19,7 +19,7 @@ RUN docker-php-ext-configure intl \
     --with-xpm-dir=/usr/include/
 
 RUN docker-php-ext-install -j$(nproc) gd iconv pdo pdo_mysql pdo_pgsql curl \
-    bcmath json xml xmlrpc zip intl opcache
+    bcmath json xml xmlrpc zip intl opcache mbstring
 
 # Add mcrypt
 RUN yes '' | pecl install -f mcrypt
