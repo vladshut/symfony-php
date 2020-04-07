@@ -18,7 +18,6 @@ RUN export LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 RUN apk add --no-cache --virtual build-dependencies icu-dev libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev g++ make autoconf
 
 RUN apt-get install -y libgmp-dev re2c libmhash-dev libmcrypt-dev file
-RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
 RUN docker-php-ext-configure gmp 
 RUN docker-php-ext-install gmp
 
