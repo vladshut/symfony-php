@@ -24,7 +24,7 @@ RUN docker-php-ext-configure intl \
     --with-xpm-dir=/usr/include/
 
 RUN docker-php-ext-install -j$(nproc) gd iconv pdo pdo_mysql pdo_pgsql curl \
-    bcmath json xml xmlrpc intl opcache mbstring zip
+    bcmath json xml xmlrpc intl opcache mbstring zip gmp
 
 RUN mkdir -p /usr/src/php/ext/redis && curl -L https://github.com/phpredis/phpredis/archive/3.0.0.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 && echo 'redis' >> /usr/src/php-available-exts && docker-php-ext-install redis
 
