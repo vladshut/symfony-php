@@ -17,6 +17,11 @@ RUN export LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 
 RUN apk add --no-cache --virtual build-dependencies icu-dev libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev g++ make autoconf
 
+RUN apt-get install -y libgmp-dev re2c libmhash-dev libmcrypt-dev file
+RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
+RUN docker-php-ext-configure gmp 
+RUN docker-php-ext-install gmp
+
 RUN docker-php-ext-configure intl \
     && docker-php-ext-configure opcache \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ \
@@ -24,7 +29,7 @@ RUN docker-php-ext-configure intl \
     --with-xpm=/usr/include/
 
 RUN docker-php-ext-install -j$(nproc) gd iconv pdo pdo_mysql pdo_pgsql curl \
-    bcmath json xml xmlrpc intl opcache mbstring zip gmp
+    bcmath json xml xmlrpc intl opcache mbstring zip
 
 RUN mkdir -p /usr/src/php/ext/redis && curl -L https://github.com/phpredis/phpredis/archive/3.0.0.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 && echo 'redis' >> /usr/src/php-available-exts && docker-php-ext-install redis
 
