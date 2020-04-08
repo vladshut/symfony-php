@@ -12,6 +12,11 @@ RUN apk upgrade --update && apk --no-cache add \
     libpng-dev libressl-dev libxml2-dev postgresql-dev icu-dev \
     yarn php-zip
 
+# Install deployeer    
+RUN curl -LO https://deployer.org/deployer.phar
+RUN mv deployer.phar /usr/local/bin/dep
+RUN chmod +x /usr/local/bin/dep
+
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
 RUN export LD_PRELOAD=/usr/lib/preloadable_libiconv.so
 
@@ -44,7 +49,7 @@ RUN rm -f /etc/localtime && \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/local/bin --filename=composer
-
+    
 # Cleanup
 RUN rm -rf /var/cache/apk/* \
     && find / -type f -iname \*.apk-new -delete \
